@@ -154,4 +154,13 @@ let ``Test sort`` () =
     Assert.Equal<list<int>>([1; 2], sort (seq [2; 1]))
     Assert.Equal<list<int>>([1 .. 10], sort <| Fixture.shuffle [|1 .. 10|])
 
-    
+[<Fact>]
+let ``Test nsmallestBy`` () =
+    let f (s: string) : int = s.Length
+    let empty : array<string> = Array.empty
+    Assert.Equal<array<string>>(Array.empty, nsmallestBy f 3 empty)
+    Assert.Equal<array<string>>(
+        [|"may"; "june"; "july"|], 
+        nsmallestBy f 3 ["january"; "february"; "march"; "april"; "may"; "june"; "july"; "august"])
+
+        
