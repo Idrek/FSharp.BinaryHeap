@@ -163,4 +163,15 @@ let ``Test nsmallestBy`` () =
         [|"may"; "june"; "july"|], 
         nsmallestBy f 3 ["january"; "february"; "march"; "april"; "may"; "june"; "july"; "august"])
 
-        
+[<Fact>]
+let ``Test nsmallest`` () =
+    let empty : array<int> = Array.empty
+    Assert.Equal<array<int>>(Array.empty, nsmallest 3 empty)
+    Assert.Equal<array<int>>([|1|], nsmallest 3 [|1|])
+    Assert.Equal<array<int>>([|1; 2; 3|], nsmallest 3 [|1; 2; 3|])
+    Assert.Equal<array<int>>([|1; 2; 3|], nsmallest 3 [|1; 2; 3; 4|])
+    Assert.Equal<array<int>>([|1; 3; 4|], nsmallest 3 [|6; 8; 4; 3; 1|])
+    Assert.Equal<array<int>>([|1; 2; 3|], nsmallest 3 [|3; 2; 1|])
+    Assert.Equal<array<int>>([|1; 1; 1; 3|], nsmallest 4 [|6; 1; 1; 3; 1|])
+
+    
