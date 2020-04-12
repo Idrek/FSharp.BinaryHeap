@@ -99,3 +99,11 @@ let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
         let fixedHeap : BinaryHeap<'a> = shiftDown 0 heapWithoutLastItem
         Some (poppedItem, fixedHeap)
 
+let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
+    let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
+        match order with | Min -> shiftUpOrder Min | Max -> shiftUpOrder Max
+    let length : int = Array.length arr
+    // TODO: Is necessary traverse the whole range?
+    let range : array<int> = [|1 .. length - 1|]
+    (arr, range) ||> Array.fold (fun heap iItem -> shiftUp iItem heap)
+
