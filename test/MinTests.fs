@@ -97,4 +97,23 @@ let ``Test pop`` () =
     let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
     Assert.Equal(Some (4, [|4; 4; 8; 9; 13; 12; 9; 11|]), pop heap)
 
-    
+[<Fact>]
+let ``Test heapify`` () =
+    let emptyHeap : BinaryHeap<int> = Array.empty
+    Assert.Equal<BinaryHeap<int>>(emptyHeap, heapify emptyHeap)
+
+    let heap : BinaryHeap<int> = [|1|]
+    Assert.Equal<BinaryHeap<int>>(heap, heapify heap)
+
+    let heap : BinaryHeap<int> = [|1; 2|]
+    Assert.Equal<BinaryHeap<int>>(heap, heapify heap)
+
+    let heap : BinaryHeap<int> = [|2; 1|]
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], heapify heap)
+
+    let heap : BinaryHeap<int> = [|1 .. 10|]
+    Assert.Equal<BinaryHeap<int>>(heap, heapify heap)
+
+    let heap : BinaryHeap<int> = [|10 .. -1 .. 1|]
+    Assert.Equal<BinaryHeap<int>>([|1; 2; 5; 4; 3; 9; 6; 10; 7; 8|], heapify heap)
+
