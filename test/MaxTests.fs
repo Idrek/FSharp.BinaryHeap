@@ -158,4 +158,15 @@ let ``Test nlargestBy`` () =
         [|"february"; "january"; "august"|], 
         nlargestBy f 3 ["january"; "february"; "march"; "april"; "may"; "june"; "july"; "august"])
 
-        
+[<Fact>]
+let ``Test nlargest`` () =
+    let empty : array<int> = Array.empty
+    Assert.Equal<array<int>>(Array.empty, nlargest 3 empty)
+    Assert.Equal<array<int>>([|1|], nlargest 3 [|1|])
+    Assert.Equal<array<int>>([|3; 2; 1|], nlargest 3 [|3; 2; 1|])
+    Assert.Equal<array<int>>([|4; 3; 2|], nlargest 3 [|4; 3; 2; 1|])
+    Assert.Equal<array<int>>([|8; 6; 4|], nlargest 3 [|6; 8; 4; 3; 1|])
+    Assert.Equal<array<int>>([|3; 2; 1|], nlargest 3 [|1; 2; 3|])
+    Assert.Equal<array<int>>([|6; 6; 6; 3|], nlargest 4 [|6; 1; 6; 3; 1; 6|])
+
+    
