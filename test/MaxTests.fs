@@ -149,3 +149,13 @@ let ``Test sort`` () =
     Assert.Equal<list<int>>([2; 1], sort (seq [2; 1]))
     Assert.Equal<list<int>>([10 .. -1 .. 1], sort <| Fixture.shuffle [|1 .. 10|])
 
+[<Fact>]
+let ``Test nlargestBy`` () =
+    let f (s: string) : int = s.Length
+    let empty : array<string> = Array.empty
+    Assert.Equal<array<string>>(Array.empty, nlargestBy f 3 empty)
+    Assert.Equal<array<string>>(
+        [|"february"; "january"; "august"|], 
+        nlargestBy f 3 ["january"; "february"; "march"; "april"; "may"; "june"; "july"; "august"])
+
+        
