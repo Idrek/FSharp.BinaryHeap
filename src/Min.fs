@@ -15,3 +15,6 @@ let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
 let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
     Core.popOrder Order.Min heap
 
+let heapify (arr: array<'a>) : BinaryHeap<'a> =
+    Core.heapifyOrder Order.Min arr
+
