@@ -30,4 +30,7 @@ let sort (xs: seq<'a>) : list<'a> =
 let nlargestBy (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a> =
     Core.nArrangementBy Order.Min projection n coll 
 
+let nlargest (n: int) (coll: seq<'a>) : array<'a> =
+    Core.nArrangementBy Order.Min id n coll
+
     
