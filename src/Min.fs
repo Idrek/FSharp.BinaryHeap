@@ -27,4 +27,7 @@ let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
 let sort (xs: seq<'a>) : list<'a> =
     Core.sortOrder Order.Min xs    
 
+let nsmallestBy (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a> =
+    Core.nArrangementBy Order.Max projection n coll 
+
     
