@@ -58,3 +58,29 @@ let pushOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> 
     let iLast : int = Array.length heapWithItem - 1
     shiftUp iLast heapWithItem
 
+let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
+    let (comparison, shiftUp) = 
+        match order with | Min -> ((>), shiftUpOrder Min) | Max -> ((<), shiftUpOrder Max)
+    let iLast : int = Array.length heap - 1
+    match iItem, heap with
+    | _, [||] -> empty
+    | iItem, heap when iItem < 0 -> heap
+    | iItem, heap when iItem > iLast -> heap
+    | iItem, heap ->
+        let rec loop iItem =
+            let (iChildL, iChildR) = findChildrenIndexes iLast iItem
+            let iChild = 
+                match iChildL, iChildR with
+                | None, None -> iItem
+                | Some l, None -> l
+                | Some l, Some r when comparison heap.[l] heap.[r] -> r
+                | Some l, Some r -> l
+                | _ -> failwith "BUG: Index of right child cannot be bigger than left child"
+            // `iChild` should not never be lower than `iItem`, but the comparison is safer.
+            if iChild <= iItem || comparison heap.[iChild] heap.[iItem] 
+            then iItem
+            else 
+                swap iItem iChild heap |> ignore
+                loop iChild
+        let iShift = loop iItem
+        shiftUp iShift heap
