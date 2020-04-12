@@ -83,3 +83,18 @@ let ``Test shiftDown`` () =
         [|4; 4; 8; 9; 7; 12; 9; 11; 13; 14; 10|], 
         shiftDown 0 heap)
 
+[<Fact>]
+let ``Test pop`` () =
+    let emptyHeap : BinaryHeap<int> = Array.empty
+    Assert.Equal(None, pop emptyHeap)
+
+    let heap : BinaryHeap<int> = [|1|]
+    Assert.Equal(Some (1, emptyHeap), pop heap)
+
+    let heap : BinaryHeap<int> = [|1; 2|]
+    Assert.Equal(Some (1, [|2|]), pop heap)
+
+    let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal(Some (4, [|4; 4; 8; 9; 13; 12; 9; 11|]), pop heap)
+
+    
