@@ -18,3 +18,6 @@ let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
 let heapify (arr: array<'a>) : BinaryHeap<'a> =
     Core.heapifyOrder Order.Max arr
 
+let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
+    Core.pushPopOrder Order.Max item heap
+
