@@ -9,3 +9,6 @@ let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
 let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
     Core.pushOrder Order.Min item heap
 
+let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
+    Core.shiftDownOrder Order.Min iItem heap
+
