@@ -107,3 +107,18 @@ let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
     let range : array<int> = [|1 .. length - 1|]
     (arr, range) ||> Array.fold (fun heap iItem -> shiftUp iItem heap)
 
+let pushPopOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
+    let (push, pop, comparison) = 
+        match order with 
+        | Min -> (pushOrder Min, popOrder Min, (>=)) 
+        | Max -> (pushOrder Max, popOrder Max, (<=))
+    match heap with
+    | [||] -> (item, heap)
+    | [|x|] when comparison x item -> (item, heap)
+    | heap ->
+        let pushedHeap : BinaryHeap<'a> = push item heap
+        let popped = pop pushedHeap
+        match popped with
+        | None -> failwith "BUG: Pop after push should always find an element"
+        | Some poppedItemAndHeap -> poppedItemAndHeap
+
