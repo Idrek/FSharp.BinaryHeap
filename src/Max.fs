@@ -24,4 +24,7 @@ let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
     Core.replaceOrder Order.Max item heap 
 
+let sort (xs: seq<'a>) : list<'a> =
+    Core.sortOrder Order.Max xs
+
     
