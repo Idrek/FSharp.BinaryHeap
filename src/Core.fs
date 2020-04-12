@@ -137,3 +137,17 @@ let replaceOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * 
             let popPushedHeap = push item poppedHeap
             Some (poppedItem, popPushedHeap)
 
+let sortOrder (order: Order) (xs: seq<'a>) : list<'a> =
+    let (push, pop) = 
+        match order with 
+        | Min -> (pushOrder Min, popOrder Min) 
+        | Max -> (pushOrder Max, popOrder Max)
+    let heap : BinaryHeap<'a> = (empty, xs) ||> Seq.fold (fun heap x -> push x heap)
+    let rec loop heap =
+        let popped = pop heap
+        match popped with
+        | None -> []
+        | Some (item, poppedHeap) -> item :: loop poppedHeap
+    loop heap
+
+    
