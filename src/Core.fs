@@ -5,6 +5,8 @@ type Order = Min | Max
 
 let private isEven (n: int) : bool = n &&& 1 = 0
 
+let private flip (f: 'b -> 'a -> 'c) (x: 'a) (y: 'b) = f y x
+
 let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
     let length = Array.length arr
     match length with
@@ -150,4 +152,52 @@ let sortOrder (order: Order) (xs: seq<'a>) : list<'a> =
         | Some (item, poppedHeap) -> item :: loop poppedHeap
     loop heap
 
-    
+let private arrayToKeyIndexedHeap 
+        (order: Order) 
+        (projection: 'a -> 'key) 
+        (arr: array<'a>) 
+        : BinaryHeap<'key * int * 'a> =
+    let length : int = Array.length arr
+    let range : array<int> = 
+        match order with 
+        | Min -> [|0 .. length - 1|] 
+        | Max -> [|0 .. -1 .. -length + 1|]
+    arr
+    |> Array.zip range
+    |> Array.map (fun (i, item) -> (projection item, i, item)) 
+    |> heapifyOrder order
+
+let nArrangementBy (order: Order) (projection: 'a -> 'key) (n: int) (coll: seq<'a>) =
+    let (sortingArr, sortingBinaryHeap, keyComparison, next) = 
+        match order with
+        | Max -> (Array.sort, Array.sort, (>=), ((+) 1))
+        | Min -> (Array.sortDescending, Array.sortDescending, (<=), (flip (-) 1))
+    let arr : array<'a> = Seq.toArray coll
+    let iLast : int = Array.length arr - 1
+    match n, arr with
+    | _, [||] -> Array.empty
+    | n, _ when n <= 0 -> Array.empty
+    | n, arr when n > iLast -> sortingArr arr
+    | n, arr ->
+        let arrToHeapConversion : array<'a> = Array.take n arr
+        let heap : BinaryHeap<'key * int * 'a> = 
+            arrayToKeyIndexedHeap order projection arrToHeapConversion
+        let top : 'key = heap.[0] |> (fun (key, index, item) -> key)
+        let rec loop i top heap n =
+            if i > iLast
+            then heap
+            else
+                let key = projection arr.[i]
+                match i with
+                | i when keyComparison key top -> loop (i + 1) top heap n
+                | i ->
+                    let replacedHeap = replaceOrder order (key, n, arr.[i]) heap
+                    match replacedHeap with
+                    | None -> failwith "BUG: Empty heap found, although it was checked at the beginning of the function"
+                    | Some (item, uHeap) ->
+                        let uTop = uHeap.[0] |> (fun (key, index, item) -> key)
+                        let uN = next n
+                        loop (i + 1) uTop uHeap uN
+        loop n top heap n |> sortingBinaryHeap |> Array.map (fun (key, index, item) -> item)
+
+        
