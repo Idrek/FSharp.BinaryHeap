@@ -5,7 +5,7 @@ type Order = Min | Max
 
 let private isEven (n: int) : bool = n &&& 1 = 0
 
-let private swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
+let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
     let length = Array.length arr
     match length with
     | 0 -> ()
