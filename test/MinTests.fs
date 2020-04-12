@@ -131,4 +131,18 @@ let ``Test pushPop`` () =
     let heap : BinaryHeap<int> = [|0 .. 2 .. 12|]
     Assert.Equal<int * BinaryHeap<int>>((0, [|2; 6; 4; 7; 8; 10; 12|]), pushPop 7 heap)
 
+[<Fact>]
+let ``Test replace`` () =
+    let emptyHeap : BinaryHeap<int> = Array.empty
+    Assert.Equal(None, replace 1 emptyHeap)
+
+    let heap : BinaryHeap<int> = [|1|]
+    Assert.Equal(Some (1, [|2|]), replace 2 heap)
+
+    let heap : BinaryHeap<int> = [|2|]
+    Assert.Equal(Some (2, [|1|]), replace 1 heap)
+
+    let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal(Some (4, [|4; 4; 8; 5; 13; 12; 9; 11; 9|]), replace 5 heap)
+
     
