@@ -145,4 +145,13 @@ let ``Test replace`` () =
     let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
     Assert.Equal(Some (4, [|4; 4; 8; 5; 13; 12; 9; 11; 9|]), replace 5 heap)
 
+[<Fact>]
+let ``Test sort`` () =
+    let emptySeq : seq<int> = Seq.empty
+    Assert.Equal<list<int>>(List.empty, sort emptySeq)
+    Assert.Equal<list<int>>([1], sort (seq [1]))
+    Assert.Equal<list<int>>([1; 2], sort (seq [1; 2]))
+    Assert.Equal<list<int>>([1; 2], sort (seq [2; 1]))
+    Assert.Equal<list<int>>([1 .. 10], sort <| Fixture.shuffle [|1 .. 10|])
+
     
