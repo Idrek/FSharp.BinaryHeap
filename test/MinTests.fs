@@ -36,3 +36,21 @@ let ``Test shiftUp`` () =
         [|4; 4; 5; 9; 4; 8; 9; 11; 13; 7; 10; 12|], 
         shiftUp iLast heap)
 
+[<Fact>]
+let ``Test push`` () =
+    let emptyHeap : BinaryHeap<int> = Array.empty
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], emptyHeap |> push 1 |> push 2)
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], emptyHeap |> push 2 |> push 1)
+    Assert.Equal<BinaryHeap<int>>(
+        [|0; 1; 2; 6; 3; 5; 4; 7; 8; 9|],
+        Array.fold 
+            (fun heap item -> push item heap) 
+            emptyHeap 
+            [|1; 3; 5; 7; 9; 2; 4; 6; 8; 0|])
+
+    let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal<BinaryHeap<int>>(
+        [|4; 4; 5; 9; 4; 8; 9; 11; 13; 7; 10; 12|], 
+        heap |> push 7 |> push 10 |> push 5)
+
+        
