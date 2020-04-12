@@ -122,3 +122,18 @@ let pushPopOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryH
         | None -> failwith "BUG: Pop after push should always find an element"
         | Some poppedItemAndHeap -> poppedItemAndHeap
 
+let replaceOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
+    let (push, pop) = 
+        match order with 
+        | Min -> (pushOrder Min, popOrder Min) 
+        | Max -> (pushOrder Max, popOrder Max)
+    match heap with
+    | [||] -> None
+    | heap ->
+        let popped : Option<'a * BinaryHeap<'a>> = pop heap
+        match popped with
+        | None -> None
+        | Some (poppedItem, poppedHeap) ->
+            let popPushedHeap = push item poppedHeap
+            Some (poppedItem, popPushedHeap)
+
