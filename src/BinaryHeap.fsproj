@@ -1,8 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Authors>Idrek</Authors>
+    <Copyright></Copyright>
+    <Description>Binary heap with a similar API to Python's heapq module</Description>
+    <PackageId>FSharp.BinaryHeap</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <PackageProjectUrl>https://github.com/Idrek/FSharp.BinaryHeap</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageTags>dotnetcore; fsharp; data-structure; heap</PackageTags>
+    <PackageVersion>0.0.1</PackageVersion>
+    <PackageVersionPrefix></PackageVersionPrefix>
+    <PackageVersionSuffix></PackageVersionSuffix>
+    <RepositoryBranch>master</RepositoryBranch>
+    <RepositoryCommit></RepositoryCommit>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Idrek/FSharp.BinaryHeap</RepositoryUrl>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.0.1</Version>
+    <Title>FSharp.BinaryHeap</Title>
   </PropertyGroup>
 
   <ItemGroup>
