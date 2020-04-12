@@ -21,3 +21,7 @@ let heapify (arr: array<'a>) : BinaryHeap<'a> =
 let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
     Core.pushPopOrder Order.Min item heap
 
+let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
+    Core.replaceOrder Order.Min item heap
+
+    
