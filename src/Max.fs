@@ -6,4 +6,6 @@ type Order = Core.Order
 let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
     Core.shiftUpOrder Order.Max iItem heap
 
-    
+let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
+    Core.pushOrder Order.Max item heap
+
