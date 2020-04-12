@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <Compile Include="Core.fs" />
+    <Compile Include="Min.fs" />
   </ItemGroup>
 
 </Project>
