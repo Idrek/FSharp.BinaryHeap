@@ -34,15 +34,36 @@ module BinaryHeap.Min
 
 type BinaryHeap<'a> = Core.BinaryHeap<'a>
 
+// Move an element up the heap.
 let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Insert item in heap.
 let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Move an element down the heap.
 let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Take an item from the heap. It could be None if heap is empty.
 let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Transform an array (not commited to heap rules) to a heap. Items could
+// end up sorted but it's not guaranteed.
 let heapify (arr: array<'a>) : BinaryHeap<'a>
+
+// Push first followed by a pop.
 let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
+
+// Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
+
+// Find the `n` first smallest items from the collection transformed by
+// the projection function.
 let nsmallestBy (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a>
+
+// Find the `n` first smallest items from the collection.
 let nsmallest (n: int) (coll: seq<'a>) : array<'a>
 ```
 
@@ -52,14 +73,35 @@ module BinaryHeap.Max
 
 type BinaryHeap<'a> = Core.BinaryHeap<'a>
 
+// Move an element up the heap.
 let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Insert item in heap.
 let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Move an element down the heap.
 let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
+
+// Take an item from the heap. It could be None if heap is empty.
 let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Transform an array (not commited to heap rules) to a heap. Items could
+// end up sorted but it's not guaranteed.
 let heapify (arr: array<'a>) : BinaryHeap<'a>
+
+// Push first followed by a pop.
 let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
+
+// Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
+
+// Find the `n` first largest items from the collection transformed by
+// the projection function.
 let nlargestBy (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a>
+
+// Find the `n` first largest items from the collection.
 let nlargest (n: int) (coll: seq<'a>) : array<'a>
 ```
