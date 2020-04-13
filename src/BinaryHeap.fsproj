@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Authors>Idrek</Authors>
     <Copyright></Copyright>
-    <Description>Binary heap with a similar API to Python's heapq module</Description>
+    <Description>Binary heap with an API similar to Python's heapq module</Description>
     <PackageId>FSharp.BinaryHeap</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageOutputPath>./nupkg</PackageOutputPath>
