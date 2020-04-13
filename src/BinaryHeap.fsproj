@@ -6,7 +6,6 @@
     <Description>Binary heap with an API similar to Python's heapq module</Description>
     <PackageId>FSharp.BinaryHeap</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageOutputPath>./nupkg</PackageOutputPath>
     <PackageProjectUrl>https://github.com/Idrek/FSharp.BinaryHeap</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageTags>dotnetcore; fsharp; data-structure; heap</PackageTags>
