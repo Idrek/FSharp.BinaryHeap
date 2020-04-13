@@ -34,14 +34,8 @@ module BinaryHeap.Min
 
 type BinaryHeap<'a> = Core.BinaryHeap<'a>
 
-// Move an element up the heap.
-let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
-
 // Insert item in heap.
 let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
-
-// Move an element down the heap.
-let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
 
 // Take an item from the heap. It could be None if heap is empty.
 let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
@@ -73,14 +67,8 @@ module BinaryHeap.Max
 
 type BinaryHeap<'a> = Core.BinaryHeap<'a>
 
-// Move an element up the heap.
-let shiftUp (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
-
 // Insert item in heap.
 let push (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
-
-// Move an element down the heap.
-let shiftDown (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a>
 
 // Take an item from the heap. It could be None if heap is empty.
 let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
