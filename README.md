@@ -11,7 +11,7 @@ dotnet add package FSharp.BinaryHeap --version 0.0.1
 
 ## Usage
 
-A snippet of code:
+A snippet of F# code:
 
 ```
 module Program
@@ -22,6 +22,28 @@ open BinaryHeap.Min
 let main _ = 
     nsmallest 4 [|6; 1; 9; 5; 4; 3|] |> printfn "Output: %A"     // [|1; 3; 4; 5|]
     0
+```
+
+A snippet of C# code:
+
+```
+using System;
+using BinaryHeap;
+
+namespace DemoCSharp
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var r1 = Min.nsmallest(4, new int[] { 6, 1, 9, 5, 4, 3});     // int[] {1, 3, 4, 5}
+
+            var heap = Min.heapify(new int[] { 6, 1, 9, 5, 4, 3});
+            var popped = Min.pop(heap)?.Value;              // (1, int[] {3, 4, 9, 6, 5})
+            var poppedNull = Min.pop(new int[] {})?.Value;  // null
+        }
+    }
+}
 ```
 
 Look into the tests for examples of API functions.
