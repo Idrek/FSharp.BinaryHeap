@@ -4,7 +4,7 @@ A binary heap data structure with an API similar to Python's [heapq module](http
 
 ## Installation
 
-From Nuget:
+From [Nuget](https://www.nuget.org/packages/FSharp.BinaryHeap/):
 ```
 dotnet add package FSharp.BinaryHeap --version 0.0.1
 ```
