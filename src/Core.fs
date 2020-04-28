@@ -188,7 +188,7 @@ let private arrayToKeyIndexedHeap
     |> Array.map (fun (i, item) -> (projection item, i, item)) 
     |> heapifyOrder order
 
-let nArrangementBy (order: Order) (projection: 'a -> 'key) (n: int) (coll: seq<'a>) =
+let nArrangementBy (order: Order) (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a> =
     let (sortingArr, sortingBinaryHeap, keyComparison, next) = 
         match order with
         | Max -> (Array.sort, Array.sort, (>=), ((+) 1))
