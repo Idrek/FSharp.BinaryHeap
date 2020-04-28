@@ -32,25 +32,25 @@ let findParentIndex (iChild: int) : Option<int> =
 
 let empty : BinaryHeap<'a> = Array.empty
 
-let rec shiftUpOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
+let rec shiftUpOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : unit =
     let childParentComparison : 'a -> 'a -> bool = 
         match order with 
         | Min -> (<=) 
         | Max -> (>=)
     match iItem, heap with
-    | _, [||] -> empty
-    | iItem, heap when iItem <= 0 -> heap
-    | iItem, heap when iItem >= Array.length heap -> heap
+    | _, [||] -> ()
+    | iItem, heap when iItem <= 0 -> ()
+    | iItem, heap when iItem >= Array.length heap -> ()
     | iItem, heap ->
         let iParent : Option<int> = findParentIndex iItem
         match iParent with
-        | None -> heap
+        | None -> ()
         | Some iParent -> 
             if childParentComparison heap.[iParent] heap.[iItem]
-            then heap
+            then ()
             else 
-                let newHeap : BinaryHeap<'a> = swap iParent iItem heap
-                shiftUpOrder order iParent newHeap
+                swapInPlace iParent iItem heap
+                shiftUpOrderInPlace order iParent heap
 
 let pushOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
     let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
