@@ -109,6 +109,10 @@ let heapifyOrderInPlace (order: Order) (arr: array<'a>) : unit =
     let range : array<int> = [|1 .. length - 1|]
     (arr, range) ||> Array.fold (fun heap iItem -> shiftUp iItem heap) |> ignore
 
+let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
+    let copy : array<'a> = Array.copy arr
+    heapifyOrderInPlace order copy
+    copy
 
 let pushPopOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
     let (push, pop, comparison) = 
