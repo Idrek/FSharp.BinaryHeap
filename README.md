@@ -57,9 +57,9 @@ $ git clone https://github.com/Idrek/FSharp.BinaryHeap FSharp.BinaryHeap && cd $
 $ dotnet test test/BinaryHeapTest.fsproj
 
 Test Run Successful.
-Total tests: 24
-     Passed: 24
- Total time: 1.0667 Seconds
+Total tests: 26
+     Passed: 26
+ Total time: 1.1464 Seconds
 ```
 
 ## API
