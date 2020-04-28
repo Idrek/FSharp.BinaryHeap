@@ -80,6 +80,10 @@ let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
 // end up sorted but it's not guaranteed.
 let heapify (arr: array<'a>) : BinaryHeap<'a>
 
+// Transform an array (not commited to heap rules) in place to a heap. 
+// Items could end up sorted but it's not guaranteed.
+let heapifyInPlace (arr: array<'a>) : unit
+
 // Push first followed by a pop.
 let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
 
@@ -115,6 +119,10 @@ let pop (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
 // Transform an array (not commited to heap rules) to a heap. Items could
 // end up sorted but it's not guaranteed.
 let heapify (arr: array<'a>) : BinaryHeap<'a>
+
+// Transform an array (not commited to heap rules) in place to a heap. 
+// Items could end up sorted but it's not guaranteed.
+let heapifyInPlace (arr: array<'a>) : unit
 
 // Push first followed by a pop.
 let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
