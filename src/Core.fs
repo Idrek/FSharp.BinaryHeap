@@ -53,11 +53,12 @@ let rec shiftUpOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) :
                 shiftUpOrderInPlace order iParent heap
 
 let pushOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
-    let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
-        match order with | Min -> shiftUpOrder Min | Max -> shiftUpOrder Max 
+    let shiftUpInPlace : int -> BinaryHeap<'a> -> unit = 
+        match order with | Min -> shiftUpOrderInPlace Min | Max -> shiftUpOrderInPlace Max 
     let heapWithItem : BinaryHeap<'a> = Array.append heap [|item|]
     let iLast : int = Array.length heapWithItem - 1
-    shiftUp iLast heapWithItem
+    shiftUpInPlace iLast heapWithItem
+    heapWithItem
 
 let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
     let (comparison, shiftUp) = 
