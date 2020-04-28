@@ -64,34 +64,45 @@ let ``Test push`` () =
         heap |> push 7 |> push 10 |> push 5)
 
 [<Fact>]
-let ``Test shiftDown`` () =
+let ``Test shiftDownInPlace`` () =
     let emptyHeap : BinaryHeap<int> = Array.empty
-    Assert.Equal<BinaryHeap<int>>(emptyHeap, shiftDown 0 emptyHeap)
-    Assert.Equal<BinaryHeap<int>>(emptyHeap, shiftDown 6 emptyHeap)
+    shiftDownInPlace 0 emptyHeap
+    Assert.Empty(emptyHeap)
+    shiftDownInPlace 6 emptyHeap
+    Assert.Empty(emptyHeap)
 
     let heap : BinaryHeap<int> = [|1|]
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 0 heap)
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 1 heap)
+    shiftDownInPlace 0 heap
+    Assert.Equal<BinaryHeap<int>>([|1|], heap)
+    shiftDownInPlace 1 heap
+    Assert.Equal<BinaryHeap<int>>([|1|], heap)
 
     let heap : BinaryHeap<int> = [|1; 2|]
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 0 heap)
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 1 heap)
+    shiftDownInPlace 0 heap
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], heap)
+    shiftDownInPlace 1 heap
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], heap)
 
     let heap : BinaryHeap<int> = [|2; 1|]
-    Assert.Equal<BinaryHeap<int>>([|1; 2|], shiftDown 0 heap)
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 1 heap)
+    shiftDownInPlace 0 heap
+    Assert.Equal<BinaryHeap<int>>([|1; 2|], heap)
+
+    let heap : BinaryHeap<int> = [|2; 1|]
+    shiftDownInPlace 1 heap
+    Assert.Equal<BinaryHeap<int>>([|2; 1|], heap)
 
     let heap : BinaryHeap<int> = [|14; 4; 8; 9; 4; 12; 9; 11; 13; 7; 10|]
     let iLast : int = Array.length heap - 1
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown -1 heap)
+    shiftDownInPlace -1 heap
+    Assert.Equal<BinaryHeap<int>>([|14; 4; 8; 9; 4; 12; 9; 11; 13; 7; 10|], heap)
     // The root element is the unique that violates heap rules, so
     // any other will return the same heap unmodified.
-    Assert.Equal<BinaryHeap<int>>(heap, shiftDown 4 heap)
+    shiftDownInPlace 4 heap
+    Assert.Equal<BinaryHeap<int>>([|14; 4; 8; 9; 4; 12; 9; 11; 13; 7; 10|], heap)
     // Progress: Swap the 14 with its lower child (4), and then again with 
     // following lower children until the leaf (4 again and 7).
-    Assert.Equal<BinaryHeap<int>>(
-        [|4; 4; 8; 9; 7; 12; 9; 11; 13; 14; 10|], 
-        shiftDown 0 heap)
+    shiftDownInPlace 0 heap
+    Assert.Equal<BinaryHeap<int>>([|4; 4; 8; 9; 7; 12; 9; 11; 13; 14; 10|], heap)
 
 [<Fact>]
 let ``Test pop`` () =
