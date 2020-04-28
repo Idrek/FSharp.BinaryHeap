@@ -87,8 +87,8 @@ let shiftDownOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : u
         loop iItem |> ignore
 
 let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
-    let shiftDown : int -> BinaryHeap<'a> -> BinaryHeap<'a> =
-        match order with | Min -> shiftDownOrder Min | Max -> shiftDownOrder Max
+    let shiftDownInPlace : int -> BinaryHeap<'a> -> unit =
+        match order with | Min -> shiftDownOrderInPlace Min | Max -> shiftDownOrderInPlace Max
     match heap with
     | [||] -> None
     | [|item|] -> Some (item, empty)
@@ -97,8 +97,8 @@ let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
         let lastItem : 'a = Array.last heap
         let heapWithoutLastItem : BinaryHeap<'a> = heap.[0 .. Array.length heap - 2]
         heapWithoutLastItem.[0] <- lastItem
-        let fixedHeap : BinaryHeap<'a> = shiftDown 0 heapWithoutLastItem
-        Some (poppedItem, fixedHeap)
+        shiftDownInPlace 0 heapWithoutLastItem
+        Some (poppedItem, heapWithoutLastItem)
 
 let heapifyOrderInPlace (order: Order) (arr: array<'a>) : unit =
     let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
