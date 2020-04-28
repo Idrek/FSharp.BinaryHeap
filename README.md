@@ -72,6 +72,9 @@ let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
 // Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
 
+// Pop element, apply function `f` on it and push again into the heap.
+let update (f: 'a -> 'a) (heap: BinaryHeap<'a>) : Option<BinaryHeap<'a>>
+
 // Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
 
@@ -104,6 +107,9 @@ let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
 
 // Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Pop element, apply function `f` on it and push again into the heap.
+let update (f: 'a -> 'a) (heap: BinaryHeap<'a>) : Option<BinaryHeap<'a>>
 
 // Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
