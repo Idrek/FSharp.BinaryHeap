@@ -7,7 +7,7 @@ let private isEven (n: int) : bool = n &&& 1 = 0
 
 let private flip (f: 'b -> 'a -> 'c) (x: 'a) (y: 'b) = f y x
 
-let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
+let swapInPlace (x: int) (y: int) (arr: array<'a>) : unit =
     let length = Array.length arr
     match length with
     | 0 -> ()
@@ -16,7 +16,6 @@ let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
         let aux : 'a = arr.[x]
         arr.[x] <- arr.[y]
         arr.[y] <- aux 
-    arr
 
 let findChildrenIndexes (iLast: int) (iParent: int) : (Option<int> * Option<int>) =
     let checkBoundary (iChild: int) = if iChild > iLast then None else Some iChild 
