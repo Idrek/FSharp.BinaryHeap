@@ -61,6 +61,8 @@ let ``Test push`` () =
     Assert.Equal<BinaryHeap<int>>(
         [|12; 11; 8; 3; 10; 7; 4; 2; 1; 8; 7; 3; 5|], 
         heap |> push 7 |> push 3 |> push 8)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|12; 11; 7; 3; 10; 5; 4; 2; 1; 8|], heap)
 
 [<Fact>]
 let ``Test shiftDownInPlace`` () =
@@ -82,7 +84,6 @@ let ``Test shiftDownInPlace`` () =
     shiftDownInPlace 0 heap
     Assert.Equal<BinaryHeap<int>>([|2; 1|], heap)
     
-
     let heap : BinaryHeap<int> = [|6; 11; 7; 3; 10; 5; 4; 2; 1; 8|]
     let iLast : int = Array.length heap - 1
     shiftDownInPlace -1 heap
@@ -109,6 +110,8 @@ let ``Test pop`` () =
 
     let heap : BinaryHeap<int> = [|12; 11; 7; 3; 10; 5; 4; 2; 1; 8|]
     Assert.Equal(Some (12, [|11; 10; 7; 3; 8; 5; 4; 2; 1|]), pop heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|12; 11; 7; 3; 10; 5; 4; 2; 1; 8|], heap)
 
 [<Fact>]
 let ``Test heapify`` () =
@@ -129,6 +132,8 @@ let ``Test heapify`` () =
 
     let heap : BinaryHeap<int> = [|1 .. 10|]
     Assert.Equal<BinaryHeap<int>>([|10; 9; 6; 7; 8; 2; 5; 1; 4; 3|], heapify heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|1 .. 10|], heap)
 
 [<Fact>]
 let ``Test heapifyInPlace`` () =
@@ -169,6 +174,8 @@ let ``Test pushPop`` () =
 
     let heap : BinaryHeap<int> = [|12 .. -2 .. 0|]
     Assert.Equal<int * BinaryHeap<int>>((12, [|10; 7; 8; 6; 4; 2; 0|]), pushPop 7 heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|12 .. -2 .. 0|], heap)
 
 [<Fact>]
 let ``Test replace`` () =
@@ -183,6 +190,8 @@ let ``Test replace`` () =
 
     let heap : BinaryHeap<int> = [|12; 11; 7; 3; 10; 5; 4; 2; 1; 8|]
     Assert.Equal(Some (12, [|11; 10; 7; 3; 9; 5; 4; 2; 1; 8|]), replace 9 heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|12; 11; 7; 3; 10; 5; 4; 2; 1; 8|], heap)
 
 [<Fact>]
 let ``Test update`` () =
@@ -204,6 +213,8 @@ let ``Test update`` () =
 
     let heap : BinaryHeap<int> = [|31; 11; 7; 3; 10; 5; 4; 2; 1; 8|]
     Assert.Equal(Some [|15; 11; 7; 3; 10; 5; 4; 2; 1; 8|], update f heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|31; 11; 7; 3; 10; 5; 4; 2; 1; 8|], heap)
 
 [<Fact>]
 let ``Test sort`` () =
