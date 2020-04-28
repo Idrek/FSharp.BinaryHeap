@@ -139,6 +139,22 @@ let replaceOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * 
             let popPushedHeap = push item poppedHeap
             Some (poppedItem, popPushedHeap)
 
+let updateOrder (order: Order) (f: 'a -> 'a) (heap: BinaryHeap<'a>) : Option<BinaryHeap<'a>> =
+    let (push, pop) = 
+        match order with 
+        | Min -> (pushOrder Min, popOrder Min) 
+        | Max -> (pushOrder Max, popOrder Max)
+    match heap with
+    | [||] -> None
+    | heap ->
+        let popped : Option<'a * BinaryHeap<'a>> = pop heap
+        match popped with
+        | None -> None
+        | Some (poppedItem, poppedHeap) ->
+            let uItem : 'a = f poppedItem
+            let uHeap : BinaryHeap<'a> = push uItem poppedHeap
+            Some uHeap
+
 let sortOrder (order: Order) (xs: seq<'a>) : list<'a> =
     let (push, pop) = 
         match order with 
