@@ -101,12 +101,12 @@ let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
         Some (poppedItem, heapWithoutLastItem)
 
 let heapifyOrderInPlace (order: Order) (arr: array<'a>) : unit =
-    let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
-        match order with | Min -> shiftUpOrder Min | Max -> shiftUpOrder Max
+    let shiftUpInPlace : int -> BinaryHeap<'a> -> unit = 
+        match order with | Min -> shiftUpOrderInPlace Min | Max -> shiftUpOrderInPlace Max
     let length : int = Array.length arr
     // TODO: Is necessary traverse the whole range?
     let range : array<int> = [|1 .. length - 1|]
-    (arr, range) ||> Array.fold (fun heap iItem -> shiftUp iItem heap) |> ignore
+    range |> Array.iter (flip shiftUpInPlace arr)
 
 let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
     let copy : array<'a> = Array.copy arr
