@@ -96,8 +96,8 @@ let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
     | heap -> 
         let poppedItem : 'a = heap.[0]
         let lastItem : 'a = Array.last heap
-        heap.[0] <- lastItem
         let heapWithoutLastItem : BinaryHeap<'a> = heap.[0 .. Array.length heap - 2]
+        heapWithoutLastItem.[0] <- lastItem
         let fixedHeap : BinaryHeap<'a> = shiftDown 0 heapWithoutLastItem
         Some (poppedItem, fixedHeap)
 
