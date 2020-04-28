@@ -48,6 +48,20 @@ namespace DemoCSharp
 
 Look into the tests for examples of API functions.
 
+## Tests
+
+Run tests of the project:
+
+```
+$ git clone https://github.com/Idrek/FSharp.BinaryHeap FSharp.BinaryHeap && cd $_
+$ dotnet test test/BinaryHeapTest.fsproj
+
+Test Run Successful.
+Total tests: 24
+     Passed: 24
+ Total time: 1.0667 Seconds
+```
+
 ## API
 
 Min heap:
