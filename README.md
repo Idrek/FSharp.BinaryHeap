@@ -6,7 +6,7 @@ A binary heap data structure with an API similar to Python's [heapq module](http
 
 From [Nuget](https://www.nuget.org/packages/FSharp.BinaryHeap/):
 ```
-dotnet add package FSharp.BinaryHeap --version 0.0.1
+$ dotnet add package FSharp.BinaryHeap --version 0.0.1
 ```
 
 ## Usage
@@ -48,6 +48,20 @@ namespace DemoCSharp
 
 Look into the tests for examples of API functions.
 
+## Tests
+
+Run tests of the project:
+
+```
+$ git clone https://github.com/Idrek/FSharp.BinaryHeap FSharp.BinaryHeap && cd $_
+$ dotnet test test/BinaryHeapTest.fsproj
+
+Test Run Successful.
+Total tests: 24
+     Passed: 24
+ Total time: 1.0667 Seconds
+```
+
 ## API
 
 Min heap:
@@ -71,6 +85,9 @@ let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
 
 // Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Pop element, apply function `f` on it and push again into the heap.
+let update (f: 'a -> 'a) (heap: BinaryHeap<'a>) : Option<BinaryHeap<'a>>
 
 // Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
@@ -104,6 +121,9 @@ let pushPop (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a>
 
 // Pop first followed by a push. It could be None if heap is empty.
 let replace (item: 'a) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>>
+
+// Pop element, apply function `f` on it and push again into the heap.
+let update (f: 'a -> 'a) (heap: BinaryHeap<'a>) : Option<BinaryHeap<'a>>
 
 // Sort a sequence using a heap.
 let sort (xs: seq<'a>) : list<'a>
