@@ -62,6 +62,8 @@ let ``Test push`` () =
     Assert.Equal<BinaryHeap<int>>(
         [|4; 4; 5; 9; 4; 8; 9; 11; 13; 7; 10; 12|], 
         heap |> push 7 |> push 10 |> push 5)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|4; 4; 8; 9; 4; 12; 9; 11; 13|], heap)
 
 [<Fact>]
 let ``Test shiftDownInPlace`` () =
@@ -117,6 +119,8 @@ let ``Test pop`` () =
 
     let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
     Assert.Equal(Some (4, [|4; 4; 8; 9; 13; 12; 9; 11|]), pop heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|4; 4; 8; 9; 4; 12; 9; 11; 13|], heap)
 
 [<Fact>]
 let ``Test heapify`` () =
@@ -137,6 +141,8 @@ let ``Test heapify`` () =
 
     let heap : BinaryHeap<int> = [|10 .. -1 .. 1|]
     Assert.Equal<BinaryHeap<int>>([|1; 2; 5; 4; 3; 9; 6; 10; 7; 8|], heapify heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|10 .. -1 .. 1|], heap)
 
 [<Fact>]
 let ``Test heapifyInPlace`` () =
@@ -177,6 +183,8 @@ let ``Test pushPop`` () =
 
     let heap : BinaryHeap<int> = [|0 .. 2 .. 12|]
     Assert.Equal<int * BinaryHeap<int>>((0, [|2; 6; 4; 7; 8; 10; 12|]), pushPop 7 heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|0 .. 2 .. 12|], heap)
 
 [<Fact>]
 let ``Test replace`` () =
@@ -191,6 +199,8 @@ let ``Test replace`` () =
 
     let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
     Assert.Equal(Some (4, [|4; 4; 8; 5; 13; 12; 9; 11; 9|]), replace 5 heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|4; 4; 8; 9; 4; 12; 9; 11; 13|], heap)
 
 [<Fact>]
 let ``Test update`` () =
@@ -212,6 +222,8 @@ let ``Test update`` () =
 
     let heap : BinaryHeap<int> = [|1; 4; 8; 9; 4; 12; 9; 11; 13|]
     Assert.Equal(Some [|2; 4; 8; 4; 13; 12; 9; 11; 9|], update f heap)
+    // Assert that original heap is unmodified.
+    Assert.Equal<BinaryHeap<int>>([|1; 4; 8; 9; 4; 12; 9; 11; 13|], heap)
 
 [<Fact>]
 let ``Test sort`` () =
