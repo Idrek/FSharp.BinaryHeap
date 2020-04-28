@@ -60,14 +60,14 @@ let pushOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> 
     shiftUpInPlace iLast heapWithItem
     heapWithItem
 
-let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
-    let (comparison, shiftUp) = 
-        match order with | Min -> ((>), shiftUpOrder Min) | Max -> ((<), shiftUpOrder Max)
+let shiftDownOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : unit =
+    let (comparison, shiftUpInPlace) = 
+        match order with | Min -> ((>), shiftUpOrderInPlace Min) | Max -> ((<), shiftUpOrderInPlace Max)
     let iLast : int = Array.length heap - 1
     match iItem, heap with
-    | _, [||] -> empty
-    | iItem, heap when iItem < 0 -> heap
-    | iItem, heap when iItem > iLast -> heap
+    | _, [||] -> ()
+    | iItem, heap when iItem < 0 -> ()
+    | iItem, heap when iItem > iLast -> ()
     | iItem, heap ->
         let rec loop iItem =
             let (iChildL, iChildR) = findChildrenIndexes iLast iItem
@@ -82,10 +82,9 @@ let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHe
             if iChild <= iItem || comparison heap.[iChild] heap.[iItem] 
             then iItem
             else 
-                swap iItem iChild heap |> ignore
+                swapInPlace iItem iChild heap
                 loop iChild
-        let iShift = loop iItem
-        shiftUp iShift heap
+        loop iItem |> ignore
 
 let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
     let shiftDown : int -> BinaryHeap<'a> -> BinaryHeap<'a> =
