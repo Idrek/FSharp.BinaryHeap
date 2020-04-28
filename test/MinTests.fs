@@ -146,6 +146,27 @@ let ``Test replace`` () =
     Assert.Equal(Some (4, [|4; 4; 8; 5; 13; 12; 9; 11; 9|]), replace 5 heap)
 
 [<Fact>]
+let ``Test update`` () =
+    let emptyHeap : BinaryHeap<int> = Array.empty
+    let f n = if n &&& 1 = 1 then n * 2 else n
+    Assert.Equal(None, update f emptyHeap)
+
+    let heap : BinaryHeap<int> = [|1|]
+    Assert.Equal(Some [|2|], update f heap)
+
+    let heap : BinaryHeap<int> = [|2|]
+    Assert.Equal(Some [|2|], update f heap)
+
+    let heap : BinaryHeap<int> = [|4; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal(Some [|4; 4; 8; 4; 13; 12; 9; 11; 9|], update f heap)
+
+    let heap : BinaryHeap<int> = [|3; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal(Some [|4; 4; 8; 6; 13; 12; 9; 11; 9|], update f heap)
+
+    let heap : BinaryHeap<int> = [|1; 4; 8; 9; 4; 12; 9; 11; 13|]
+    Assert.Equal(Some [|2; 4; 8; 4; 13; 12; 9; 11; 9|], update f heap)
+
+[<Fact>]
 let ``Test sort`` () =
     let emptySeq : seq<int> = Seq.empty
     Assert.Equal<list<int>>(List.empty, sort emptySeq)
