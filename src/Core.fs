@@ -7,7 +7,7 @@ let private isEven (n: int) : bool = n &&& 1 = 0
 
 let private flip (f: 'b -> 'a -> 'c) (x: 'a) (y: 'b) = f y x
 
-let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
+let swapInPlace (x: int) (y: int) (arr: array<'a>) : unit =
     let length = Array.length arr
     match length with
     | 0 -> ()
@@ -16,7 +16,6 @@ let swap (x: int) (y: int) (arr: array<'a>) : array<'a> =
         let aux : 'a = arr.[x]
         arr.[x] <- arr.[y]
         arr.[y] <- aux 
-    arr
 
 let findChildrenIndexes (iLast: int) (iParent: int) : (Option<int> * Option<int>) =
     let checkBoundary (iChild: int) = if iChild > iLast then None else Some iChild 
@@ -33,41 +32,42 @@ let findParentIndex (iChild: int) : Option<int> =
 
 let empty : BinaryHeap<'a> = Array.empty
 
-let rec shiftUpOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
+let rec shiftUpOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : unit =
     let childParentComparison : 'a -> 'a -> bool = 
         match order with 
         | Min -> (<=) 
         | Max -> (>=)
     match iItem, heap with
-    | _, [||] -> empty
-    | iItem, heap when iItem <= 0 -> heap
-    | iItem, heap when iItem >= Array.length heap -> heap
+    | _, [||] -> ()
+    | iItem, heap when iItem <= 0 -> ()
+    | iItem, heap when iItem >= Array.length heap -> ()
     | iItem, heap ->
         let iParent : Option<int> = findParentIndex iItem
         match iParent with
-        | None -> heap
+        | None -> ()
         | Some iParent -> 
             if childParentComparison heap.[iParent] heap.[iItem]
-            then heap
+            then ()
             else 
-                let newHeap : BinaryHeap<'a> = swap iParent iItem heap
-                shiftUpOrder order iParent newHeap
+                swapInPlace iParent iItem heap
+                shiftUpOrderInPlace order iParent heap
 
 let pushOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
-    let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
-        match order with | Min -> shiftUpOrder Min | Max -> shiftUpOrder Max 
+    let shiftUpInPlace : int -> BinaryHeap<'a> -> unit = 
+        match order with | Min -> shiftUpOrderInPlace Min | Max -> shiftUpOrderInPlace Max 
     let heapWithItem : BinaryHeap<'a> = Array.append heap [|item|]
     let iLast : int = Array.length heapWithItem - 1
-    shiftUp iLast heapWithItem
+    shiftUpInPlace iLast heapWithItem
+    heapWithItem
 
-let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHeap<'a> =
-    let (comparison, shiftUp) = 
-        match order with | Min -> ((>), shiftUpOrder Min) | Max -> ((<), shiftUpOrder Max)
+let shiftDownOrderInPlace (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : unit =
+    let (comparison, shiftUpInPlace) = 
+        match order with | Min -> ((>), shiftUpOrderInPlace Min) | Max -> ((<), shiftUpOrderInPlace Max)
     let iLast : int = Array.length heap - 1
     match iItem, heap with
-    | _, [||] -> empty
-    | iItem, heap when iItem < 0 -> heap
-    | iItem, heap when iItem > iLast -> heap
+    | _, [||] -> ()
+    | iItem, heap when iItem < 0 -> ()
+    | iItem, heap when iItem > iLast -> ()
     | iItem, heap ->
         let rec loop iItem =
             let (iChildL, iChildR) = findChildrenIndexes iLast iItem
@@ -82,32 +82,36 @@ let shiftDownOrder (order: Order) (iItem: int) (heap: BinaryHeap<'a>) : BinaryHe
             if iChild <= iItem || comparison heap.[iChild] heap.[iItem] 
             then iItem
             else 
-                swap iItem iChild heap |> ignore
+                swapInPlace iItem iChild heap
                 loop iChild
-        let iShift = loop iItem
-        shiftUp iShift heap
+        loop iItem |> ignore
 
 let popOrder (order: Order) (heap: BinaryHeap<'a>) : Option<'a * BinaryHeap<'a>> =
-    let shiftDown : int -> BinaryHeap<'a> -> BinaryHeap<'a> =
-        match order with | Min -> shiftDownOrder Min | Max -> shiftDownOrder Max
+    let shiftDownInPlace : int -> BinaryHeap<'a> -> unit =
+        match order with | Min -> shiftDownOrderInPlace Min | Max -> shiftDownOrderInPlace Max
     match heap with
     | [||] -> None
     | [|item|] -> Some (item, empty)
     | heap -> 
         let poppedItem : 'a = heap.[0]
         let lastItem : 'a = Array.last heap
-        heap.[0] <- lastItem
         let heapWithoutLastItem : BinaryHeap<'a> = heap.[0 .. Array.length heap - 2]
-        let fixedHeap : BinaryHeap<'a> = shiftDown 0 heapWithoutLastItem
-        Some (poppedItem, fixedHeap)
+        heapWithoutLastItem.[0] <- lastItem
+        shiftDownInPlace 0 heapWithoutLastItem
+        Some (poppedItem, heapWithoutLastItem)
 
-let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
-    let shiftUp : int -> BinaryHeap<'a> -> BinaryHeap<'a> = 
-        match order with | Min -> shiftUpOrder Min | Max -> shiftUpOrder Max
+let heapifyOrderInPlace (order: Order) (arr: array<'a>) : unit =
+    let shiftUpInPlace : int -> BinaryHeap<'a> -> unit = 
+        match order with | Min -> shiftUpOrderInPlace Min | Max -> shiftUpOrderInPlace Max
     let length : int = Array.length arr
     // TODO: Is necessary traverse the whole range?
     let range : array<int> = [|1 .. length - 1|]
-    (arr, range) ||> Array.fold (fun heap iItem -> shiftUp iItem heap)
+    range |> Array.iter (flip shiftUpInPlace arr)
+
+let heapifyOrder (order: Order) (arr: array<'a>) : BinaryHeap<'a> =
+    let copy : array<'a> = Array.copy arr
+    heapifyOrderInPlace order copy
+    copy
 
 let pushPopOrder (order: Order) (item: 'a) (heap: BinaryHeap<'a>) : 'a * BinaryHeap<'a> =
     let (push, pop, comparison) = 
@@ -183,7 +187,7 @@ let private arrayToKeyIndexedHeap
     |> Array.map (fun (i, item) -> (projection item, i, item)) 
     |> heapifyOrder order
 
-let nArrangementBy (order: Order) (projection: 'a -> 'key) (n: int) (coll: seq<'a>) =
+let nArrangementBy (order: Order) (projection: 'a -> 'key) (n: int) (coll: seq<'a>) : array<'a> =
     let (sortingArr, sortingBinaryHeap, keyComparison, next) = 
         match order with
         | Max -> (Array.sort, Array.sort, (>=), ((+) 1))
