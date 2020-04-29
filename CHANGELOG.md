@@ -9,15 +9,15 @@
 
 - Additions:
 
-    - New `Min.heapifyInPlace` and `Max.heapifyInPlace` functions.
-    - New tests for `Min.heapifyInPlace` and `Max.heapifyInPlace`
+    - New `Min.heapifyInPlace` and `Max.heapifyInPlace` API functions.
+    - New tests for `Min.heapifyInPlace` and `Max.heapifyInPlace` functions.
 
 - Fixes:
 
-    - Refactor `Core.shiftDown` to `Core.shiftDownInPlace`
-    - Refactor `Core.shiftUp` to `Core.shiftUpInPlace`
-    - Refactor internal `Core.swap` to `Core.swapInPlace`
-    - Refactor multiple functions to use the previous ones.
+    - Rename and refactor `Core.shiftDown` function to `Core.shiftDownInPlace`
+    - Rename and refactor `Core.shiftUp` function to `Core.shiftUpInPlace`
+    - Rename and refactor internal `Core.swap` function to `Core.swapInPlace`
+    - Refactor several functions to use the previous ones.
 
 ----------------
 
