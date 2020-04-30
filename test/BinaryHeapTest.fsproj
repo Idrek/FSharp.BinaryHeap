@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Fixture.fs" />
     <Compile Include="CoreTests.fs" />
     <Compile Include="MinTests.fs" />
     <Compile Include="MaxTests.fs" />

@@ -223,7 +223,7 @@ let ``Test sort`` () =
     Assert.Equal<list<int>>([1], sort (seq [1]))
     Assert.Equal<list<int>>([2; 1], sort (seq [1; 2]))
     Assert.Equal<list<int>>([2; 1], sort (seq [2; 1]))
-    Assert.Equal<list<int>>([10 .. -1 .. 1], sort <| Fixture.shuffle [|1 .. 10|])
+    Assert.Equal<list<int>>([10 .. -1 .. 1], sort [|10 .. -1 .. 1|])
 
 [<Fact>]
 let ``Test nlargestBy`` () =
